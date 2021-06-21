@@ -5,7 +5,7 @@ public class Radio {
     private int userMaxFrequency;
     private int currentFrequency;
     private final int minVolume = 0;
-    private final int maxVolume = 10;
+    private final int maxVolume = 100;
     private int currentVolume;
 
     public Radio(int userMaxFrequency) {
@@ -13,9 +13,8 @@ public class Radio {
     }
 
     public Radio() {
-        this.userMaxFrequency = 10;
+        this.userMaxFrequency = 9;
     }
-
 
 
     public int getMinFrequency() {
@@ -57,6 +56,7 @@ public class Radio {
             return;
         this.currentVolume = currentVolume;
     }
+
     public void increaseFrequency() {
         if (currentFrequency < userMaxFrequency) {
             currentFrequency = currentFrequency + 1;
