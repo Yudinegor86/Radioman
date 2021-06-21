@@ -4,13 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import lombok.AllArgsConstructor;
+
 class RadioTest {
+
+    public RadioTest() {
+    }
 
     @Test
     public void shouldIncreaseCurrentFrequencyUnderMaxFrequency() {
         Radio radio = new Radio();
-        int currentFrequency = radio.getMaxFrequency() - 1;
-        int expected = radio.getMaxFrequency();
+        int currentFrequency = radio.getUserMaxFrequency() - 1;
+        int expected = radio.getUserMaxFrequency();
         radio.setCurrentFrequency(currentFrequency);
         radio.increaseFrequency();
         assertEquals(expected, radio.getCurrentFrequency());
@@ -19,7 +24,7 @@ class RadioTest {
     @Test
     public void shouldIncreaseCurrentFrequencyEqualMaxFrequency() {
         Radio radio = new Radio();
-        int currentFrequency = radio.getMaxFrequency();
+        int currentFrequency = radio.getUserMaxFrequency();
         int expected = radio.getMinFrequency();
         radio.setCurrentFrequency(currentFrequency);
         radio.increaseFrequency();
@@ -50,7 +55,7 @@ class RadioTest {
     public void shouldDecreaseCurrentFrequencyEqualMinFrequency() {
         Radio radio = new Radio();
         int currentFrequency = 0;
-        int expected = 9;
+        int expected = radio.getUserMaxFrequency();
         radio.setCurrentFrequency(currentFrequency);
         radio.decreaseFrequency();
         assertEquals(expected, radio.getCurrentFrequency());
@@ -59,8 +64,8 @@ class RadioTest {
     @Test
     public void shouldDecreaseCurrentFrequencyEqualMaxFrequency() {
         Radio radio = new Radio();
-        int currentFrequency = 9;
-        int expected = 8;
+        int currentFrequency = radio.getUserMaxFrequency();
+        int expected = radio.getUserMaxFrequency() - 1;
         radio.setCurrentFrequency(currentFrequency);
         radio.decreaseFrequency();
         assertEquals(expected, radio.getCurrentFrequency());
@@ -69,73 +74,66 @@ class RadioTest {
     @Test
     public void shouldReturnCurrentFrequencyOverMaxFrequency() {
         Radio radio = new Radio();
-        radio.setCurrentFrequency(10);
+        int currentFrequency = radio.getUserMaxFrequency() + 1;
+        radio.setCurrentFrequency(currentFrequency);
         int expected = 0;
         assertEquals(expected, radio.getCurrentFrequency());
-
     }
 
     @Test
     public void shouldReturnCurrentFrequencyUnderMinFrequency() {
         Radio radio = new Radio();
-        radio.setCurrentFrequency(-1);
+        int currentFrequency = radio.getMinFrequency() - 1;
+        radio.setCurrentFrequency(currentFrequency);
         int expected = 0;
         assertEquals(expected, radio.getCurrentFrequency());
-
     }
 
     @Test
     public void shouldIncreaseCurrentVolumeUnderMaxVolume() {
         Radio radio = new Radio();
-        int currentVolume = 9;
+        int currentVolume = radio.getMaxVolume() - 1;
         radio.setCurrentVolume(currentVolume);
-        int expected = 10;
+        int expected = radio.getMaxVolume();
         radio.increaseVolume();
         assertEquals(expected, radio.getCurrentVolume());
-
-
     }
 
     @Test
     public void shouldIncreaseCurrentVolumeEqualMaxVolume() {
         Radio radio = new Radio();
-        int currentVolume = 10;
+        int currentVolume = radio.getMaxVolume();
         radio.setCurrentVolume(currentVolume);
-        int expected = 10;
+        int expected = radio.getMaxVolume();
         radio.increaseVolume();
         assertEquals(expected, radio.getCurrentVolume());
-
-
     }
 
     @Test
     public void shouldDecreaseCurrentVolumeOverMinVolume() {
         Radio radio = new Radio();
-        int currentVolume = 1;
+        int currentVolume = radio.getMinVolume() + 1;
         radio.setCurrentVolume(currentVolume);
         int expected = 0;
         radio.decreaseVolume();
         assertEquals(expected, radio.getCurrentVolume());
-
-
     }
 
     @Test
     public void shouldDecreaseCurrentVolumeEqualMinVolume() {
         Radio radio = new Radio();
-        int currentVolume = 0;
+        int currentVolume = radio.getMinVolume();
         radio.setCurrentVolume(currentVolume);
         int expected = 0;
         radio.decreaseVolume();
         assertEquals(expected, radio.getCurrentVolume());
-
-
     }
 
     @Test
     public void shouldReturnCurrentVolumeOverMaxVolume() {
         Radio radio = new Radio();
-        radio.setCurrentVolume(11);
+        int currentVolume = radio.getMaxVolume() + 1;
+        radio.setCurrentVolume(currentVolume);
         int expected = 0;
         assertEquals(expected, radio.getCurrentVolume());
     }
@@ -143,10 +141,25 @@ class RadioTest {
     @Test
     public void shouldReturnCurrentVolumeUnderMinVolume() {
         Radio radio = new Radio();
-        radio.setCurrentVolume(-1);
+        int currentVolume = radio.getMinVolume() - 1;
+        radio.setCurrentVolume(currentVolume);
         int expected = 0;
         assertEquals(expected, radio.getCurrentVolume());
     }
 
+    @Test
+    public void shouldSetUserMaxFrequencyByDefault() {
+        Radio radio = new Radio();
+        int expected = 10;
+        assertEquals(expected, radio.getUserMaxFrequency());
+    }
 
+    @Test
+    public void shouldUseUserMaxFrequencySettings() {
+        Radio radio = new Radio(0, 50, 9, 0, 100, 9);
+        int currentFrequency = radio.getUserMaxFrequency();
+        int expected = 50;
+        radio.setCurrentFrequency(currentFrequency);
+        assertEquals(expected, radio.getCurrentFrequency());
+    }
 }
