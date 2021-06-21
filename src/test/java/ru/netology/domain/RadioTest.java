@@ -150,7 +150,7 @@ class RadioTest {
     @Test
     public void shouldSetUserMaxFrequencyByDefault() {
         Radio radio = new Radio();
-        int expected = 8;
+        int expected = 10;
         assertEquals(expected, radio.getUserMaxFrequency());
     }
 
